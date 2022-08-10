@@ -14,12 +14,13 @@ def index():
 def login():
     try:
         data = request.args
-        print(data["username"], data["password"])
         res = requests.get(
             f'https://usersignin.azurewebsites.net/api/login?username={data["username"]}&password={data["password"]}').json()
         if(res['res'] != 'ok'):
             return redirect(url_for('loginFailed'))
         else:
+            session['username'] = data['username']
+            session['password'] = data['password']
             return redirect(url_for('cameraApp'))
     except Exception as e:
         return {"server encountered an internal error"}, 500
@@ -32,7 +33,9 @@ def loginFailed():
 
 @app.route("/cameraApp")
 def cameraApp():
-    return render_template('cameraApp.html')
+    if 'password' in session:
+        return render_template('cameraApp.html')
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":
