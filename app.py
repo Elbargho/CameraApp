@@ -1,5 +1,4 @@
-from flask import Flask, Response, render_template, session, request, redirect, url_for
-import time
+from flask import Flask, render_template, session, request, redirect, url_for
 import requests
 
 app = Flask(__name__)
