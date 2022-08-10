@@ -35,7 +35,7 @@ def loginFailed():
 def cameraApp():
     if 'password' in session:
         return render_template('cameraApp.html')
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":
