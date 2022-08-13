@@ -23,7 +23,7 @@ async function server_request(method, url, obj = null) {
     return [status, data];
 }
 
-function halfHourLeft() {
+async function halfHourLeft() {
     let onwerMsg = document.getElementById('ownerMsg');
     onwerMsg.innerText = "Reserver has half hour left in the park!";
     await server_request('GET', 'signalR');
