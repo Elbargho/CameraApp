@@ -70,6 +70,7 @@ def carEntered():
         data = request.get_json()
         inParkPn = data['platenumber']
         hasPark, location = getParkLocation()
+        session['location'] = location
         hasReserver, reserverUn, reserverPn = getReserver(location)
         if inParkPn == session['platenumber'] or not hasPark:
             msg = 'Owner has entered the park'
