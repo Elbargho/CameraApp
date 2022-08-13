@@ -22,7 +22,7 @@ def login():
         else:
             session['username'] = data['username']
             session['password'] = data['password']
-            session['platenumber'] = res['platenumber']
+            session['platenumber'] = res['accDetails']['platenumber']
             return redirect(url_for('cameraApp'))
     except:
         return {"server encountered an internal error"}, 500
