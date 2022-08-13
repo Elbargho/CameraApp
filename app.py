@@ -99,7 +99,7 @@ def carLeft():
                 f'http://releasepark.azurewebsites.net/api/releasepark?location={session["location"]}&username={session["username"]}&password={session["password"]}').json()
             if(res['res'] != 'ok'):
                 raise Exception
-            msg = f'Car has left and you received {res["bill"]}$'
+            msg = f'Car has left and you received {res["bill"]}₪'
         return {'msg': msg}, 200
     except:
         return {}, 500
