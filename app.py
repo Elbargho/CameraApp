@@ -64,5 +64,22 @@ def carEntered():
         return {}, 500
 
 
+@app.route('/carleft', methods=["POST"])
+def carLeft():
+    try:
+        if(not session['status']):
+            msg = 'Car has left'
+            # signalR(owner, msg)
+        else:
+            res = requests.get(
+                f'http://releasepark.azurewebsites.net/api/releasepark?location={session["location"]}&username={session["ownerUN"]}&password={session["password"]}').json()
+            if(res['res'] != 'ok'):
+                raise Exception
+            msg = f'Car has left and you received {res["bill"]}₪'
+        return {'msg': msg}, 200
+    except:
+        return {}, 500
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
