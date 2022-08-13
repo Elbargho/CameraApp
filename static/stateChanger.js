@@ -28,7 +28,7 @@ async function stateChanger(json) {
     let plateViewer = document.getElementById('plateViewer');
     let onwerMsg = document.getElementById('ownerMsg');
     if (results.length > 0 && carInPark == false) { // a car entered
-        let plateNumber = results['platenumber'];
+        let plateNumber = results['plate'];
         plateViewer.innerText = plateNumber;
         [res, data] = await server_request('POST', 'carentered', {'platenumber': plateNumber});
         if(res){
