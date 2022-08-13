@@ -1,4 +1,4 @@
 flask
 requests
 azure.data.tables
-pytz
+time

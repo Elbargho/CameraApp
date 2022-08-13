@@ -23,10 +23,18 @@ async function server_request(method, url, obj = null) {
     return [status, data];
 }
 
+function halfHourLeft(timeLeft) {
+    let onwerMsg = document.getElementById('ownerMsg');
+    onwerMsg.innerText = "Reserver has half hour left in the park!";
+    await server_request('GET', 'signalR');
+}
+
+
 async function stateChanger(json) {
     let results = json['results'];
     let plateViewer = document.getElementById('plateViewer');
     let onwerMsg = document.getElementById('ownerMsg');
+    let interval;
     if (results.length > 0 && !carInPark) { // a car entered
         carInPark = true;
         let plateNumber = results[0]['plate'];
@@ -34,12 +42,16 @@ async function stateChanger(json) {
         [res, data] = await server_request('POST', 'carentered', { 'platenumber': plateNumber });
         if (res) {
             onwerMsg.innerText = data['msg']
+            if (data['status']) {
+                interval = setInterval(halfHourLeft, Math.max([timeLeft - 30, 0]));
+            }
         } else {
             alert('server encountered an internal error');
         }
     } else if (results.length == 0 && carInPark) { // a car left
         carInPark = false;
         plateViewer.innerText = '-------';
+        clearInterval(interval);
         [res, data] = await server_request('POST', 'carleft');
         if (res) {
             onwerMsg.innerText = data['msg']
