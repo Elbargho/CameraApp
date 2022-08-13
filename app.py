@@ -81,5 +81,12 @@ def carLeft():
         return {}, 500
 
 
+@app.rout('signalR')
+def signalR():
+    return {}, 200
+    #signalR(owner, 'The reserver still parking')
+    #signalR(reserver, 'Notice, less than half hour left for you in the parking')
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
