@@ -1,4 +1,2 @@
 flask
 requests
-azure.data.tables
-time

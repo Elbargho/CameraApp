@@ -1,7 +1,5 @@
 from flask import Flask, render_template, session, request, redirect, url_for
 import requests
-from azure.data.tables import TableClient
-import time
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
