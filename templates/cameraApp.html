@@ -16,12 +16,12 @@
         <div class="contentarea">
             <div class="camera">
                 <video id="video">Video stream not available.</video>
-                <button id="startbutton">Take photo</button>
             </div>
             <canvas id="canvas">
             </canvas>
-            <div id="plateNumber" class="bg-primary d-flex text-light justify-content-center">
-                <h3>Plate Number: <span id="platenumber">12345678</span></h3>
+            <div class="bg-primary d-flex text-light justify-content-center">
+                <h3>Plate Number: <span id="plateViewer">-------</span></h3>
+                <h3>Message: <span id="ownerMsg"></span></h3>
             </div>
         </div>
     </div>
@@ -29,6 +29,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="static/cameraScript.js"></script>
+    <script src="static/stateChanger.js"></script>
 </body>
 
 </html>
