@@ -39,5 +39,30 @@ def cameraApp():
     return redirect(url_for('index'))
 
 
+@app.route('/carentered', methods=["POST"])
+def carEntered():
+    try:
+        status = False
+        data = request.get_json()
+        currPN = data['platenumber']
+        res = requests.get(
+            f"https://getreserve.azurewebsites.net/api/getReserve?username={session['ownerUN']}&password={session['password']}").json()
+        session["location"], session["reserver"], reserverPn, timeLeft = res["location"], res[
+            "reserver"], res["platenumber"], res["timeLeft"]
+        if currPN == session['ownerPN'] or session["location"] == None:
+            msg = 'Owner has entered the park'
+        elif session["reserver"] == None or reserverPn != currPN:
+            msg = f'A car with platenumber {currPN} entered your park without reservation'
+            # signalR(owner, msg)
+        else:
+            msg = f'The reserver has entered the park'
+            status = True
+            # signalR(owner, msg)
+        session['status'] = status
+        return {'msg': msg, 'status': status, 'timeLeft': timeLeft}, 200
+    except:
+        return {}, 500
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
