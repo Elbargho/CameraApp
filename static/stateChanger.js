@@ -28,6 +28,7 @@ async function stateChanger(json) {
     let plateViewer = document.getElementById('plateViewer');
     let onwerMsg = document.getElementById('ownerMsg');
     if (results.length > 0 && carInPark == false) { // a car entered
+        carInPark = true;
         let plateNumber = results[0]['plate'];
         plateViewer.innerText = plateNumber;
         [res, data] = await server_request('POST', 'carentered', {'platenumber': plateNumber});
@@ -37,6 +38,7 @@ async function stateChanger(json) {
             alert('server encountered an internal error');
         }
     } else if (results.length == 0 && carInPark == true) { // a car left
+        carInPark = false;
         plateViewer.innerText = '-------';
         [res, data] = await server_request('POST', 'carleft');
         if(res){
