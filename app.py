@@ -81,7 +81,7 @@ def carLeft():
         return {}, 500
 
 
-@app.rout('signalR')
+@app.rout("/signalR")
 def signalR():
     return {}, 200
     #signalR(owner, 'The reserver still parking')
