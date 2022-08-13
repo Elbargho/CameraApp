@@ -66,7 +66,6 @@ def getReserver(location):
 @app.route('/carentered', methods=["POST"])
 def carEntered():
     try:
-        msg = ''
         status = False
         data = request.get_json()
         inParkPn = data['platenumber']
@@ -82,8 +81,8 @@ def carEntered():
             session['reserver'] = reserverUn
             status = True
             # signalR(owner, msg)
-        session['stats'] = status
-        return {'msg': msg}
+        session['status'] = status
+        return {'msg': msg}, 200
     except:
         return {}, 500
 
@@ -91,7 +90,6 @@ def carEntered():
 @app.route('/carleft', methods=["POST"])
 def carLeft():
     try:
-        msg = ''
         if(not session['status']):
             msg = 'Car has left'
             # signalR(owner, msg)
@@ -101,7 +99,7 @@ def carLeft():
             if(res['res'] != 'ok'):
                 raise Exception
             msg = f'Car has left and you received {res["bill"]}$'
-        return {'msg': msg}
+        return {'msg': msg}, 200
     except:
         return {}, 500
 
