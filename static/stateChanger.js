@@ -43,6 +43,7 @@ async function stateChanger(json) {
         if (res) {
             onwerMsg.innerText = data['msg']
             if (data['status']) {
+                timeLeft = data['timeLeft'];
                 timeout = setTimeout(halfHourLeft, Math.max(timeLeft - 30, 10));
             }
         } else {
