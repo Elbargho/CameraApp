@@ -25,7 +25,7 @@ async function server_request(method, url, obj = null) {
 
 async function halfHourLeft() {
     let onwerMsg = document.getElementById('ownerMsg');
-    onwerMsg.innerText = "Reserver has half hour left in the park!";
+    onwerMsg.innerText = "Reserver has less than half hour left in the park!";
     await server_request('GET', 'notifylimit');
 }
 

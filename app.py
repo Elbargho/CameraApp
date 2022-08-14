@@ -43,10 +43,11 @@ def signalR(msg, username):
     requests.get(
         f"https://signalrnotification.azurewebsites.net/api/sendnotification?username={username}&message={msg}")
 
+
 @app.route('/notifylimit')
 def notifyLimit():
-    signalR('Reserver has half hour left in the park!', session['ownerPN'])
-    signalR('Note that you have less the half hour left', session['reserver'])
+    signalR('Reserver has less than half hour left', session['ownerPN'])
+    signalR('Note that you have less than half hour left', session['reserver'])
 
 
 @app.route('/carentered', methods=["POST"])
