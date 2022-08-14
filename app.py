@@ -48,6 +48,7 @@ def signalR(msg, username):
 def notifyLimit():
     signalR('Reserver has less than half hour left', session['ownerPN'])
     signalR('Note that you have less than half hour left', session['reserver'])
+    return {}, 200
 
 
 @app.route('/carentered', methods=["POST"])

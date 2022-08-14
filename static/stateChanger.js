@@ -44,7 +44,7 @@ async function stateChanger(json) {
             onwerMsg.innerText = data['msg']
             if (data['status']) {
                 timeLeft = data['timeLeft'];
-                timeout = setTimeout(halfHourLeft, Math.max(timeLeft - 30, 10));
+                timeout = setTimeout(halfHourLeft, Math.max(timeLeft - 30, 10) * 1000);
             }
         } else {
             alert('server encountered an internal error');
