@@ -26,7 +26,7 @@ async function server_request(method, url, obj = null) {
 async function halfHourLeft() {
     let onwerMsg = document.getElementById('ownerMsg');
     onwerMsg.innerText = "Reserver has half hour left in the park!";
-    await server_request('GET', 'signalR');
+    await server_request('GET', 'notifylimit');
 }
 
 
@@ -43,7 +43,7 @@ async function stateChanger(json) {
         if (res) {
             onwerMsg.innerText = data['msg']
             if (data['status']) {
-                timeout = setTimeout(halfHourLeft, Math.max([timeLeft - 30, 0]));
+                timeout = setTimeout(halfHourLeft, Math.max(timeLeft - 30, 10));
             }
         } else {
             alert('server encountered an internal error');
@@ -51,7 +51,9 @@ async function stateChanger(json) {
     } else if (results.length == 0 && carInPark) { // a car left
         carInPark = false;
         plateViewer.innerText = '-------';
-        clearTimeout(timeout);
+        if (timeout != undefined) {
+            clearTimeout(timeout);
+        }
         [res, data] = await server_request('POST', 'carleft');
         if (res) {
             onwerMsg.innerText = data['msg']

@@ -39,6 +39,16 @@ def cameraApp():
     return redirect(url_for('index'))
 
 
+def signalR(msg, username):
+    requests.get(
+        f"https://signalrnotification.azurewebsites.net/api/sendnotification?username={username}&message={msg}")
+
+@app.route('/notifylimit')
+def notifyLimit():
+    signalR('Reserver has half hour left in the park!', session['ownerPN'])
+    signalR('Note that you have less the half hour left', session['reserver'])
+
+
 @app.route('/carentered', methods=["POST"])
 def carEntered():
     try:
@@ -53,11 +63,11 @@ def carEntered():
             msg = 'Owner has entered the park'
         elif session["reserver"] == None or reserverPn != currPN:
             msg = f'A car with platenumber {currPN} entered your park without reservation'
-            # signalR(owner, msg)
+            signalR(session["ownerPN"], msg)
         else:
             msg = f'The reserver has entered the park'
             status = True
-            # signalR(owner, msg)
+            signalR(session["ownerPN"], msg)
         session['status'] = status
         return {'msg': msg, 'status': status, 'timeLeft': timeLeft}, 200
     except:
@@ -69,7 +79,7 @@ def carLeft():
     try:
         if(not session['status']):
             msg = 'Car has left'
-            # signalR(owner, msg)
+            signalR(session["ownerPN"], msg)
         else:
             res = requests.get(
                 f'http://releasepark.azurewebsites.net/api/releasepark?location={session["location"]}&username={session["ownerUN"]}&password={session["password"]}').json()
@@ -79,6 +89,7 @@ def carLeft():
         return {'msg': msg}, 200
     except:
         return {}, 500
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
