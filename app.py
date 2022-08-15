@@ -65,11 +65,10 @@ def carEntered():
             msg = 'Owner has entered the park'
         elif session["reserver"] == None or reserverPn != currPN:
             msg = f'A car with platenumber {currPN} entered your park without reservation'
-            signalR(session["ownerUN"], msg)
         else:
             msg = f'The reserver has entered the park'
             status = True
-            signalR(session["ownerUN"], msg)
+        signalR(session["ownerUN"], msg)
         session['status'] = status
         return {'msg': msg, 'status': status, 'timeLeft': timeLeft}, 200
     except:

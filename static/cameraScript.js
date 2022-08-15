@@ -63,7 +63,7 @@
             }
         }, false);
         while (true) {
-            await sleep(3.5);
+            await sleep(5);
             takepicture();
         }
     }
