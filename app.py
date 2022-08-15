@@ -39,15 +39,15 @@ def cameraApp():
     return redirect(url_for('index'))
 
 
-def signalR(msg, username):
+def signalR(username, msg):
     requests.get(
         f"https://signalrnotification.azurewebsites.net/api/sendnotification?username={username}&message={msg}")
 
 
 @app.route('/notifylimit')
 def notifyLimit():
-    signalR('Reserver has less than half hour left', session['ownerUN'])
-    signalR('Note that you have less than half hour left', session['reserver'])
+    signalR(session['ownerUN'], 'Reserver has less than half hour left')
+    signalR(session['reserver'], 'Note that you have less than half hour left')
     return {}, 200
 
 
