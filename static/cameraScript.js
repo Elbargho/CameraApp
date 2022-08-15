@@ -93,7 +93,7 @@
         fetch("https://api.platerecognizer.com/v1/plate-reader/", {
             method: "POST",
             headers: {
-                Authorization: "Token 47f46bca03f96bc0b9e834ff8e7e35089b0cf8c2",
+                Authorization: "Token 719fadfc3ca6e38f30fb4d09a15542e2b599af99",
             },
             body: body,
         })
