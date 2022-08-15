@@ -46,7 +46,7 @@ def signalR(msg, username):
 
 @app.route('/notifylimit')
 def notifyLimit():
-    signalR('Reserver has less than half hour left', session['ownerPN'])
+    signalR('Reserver has less than half hour left', session['ownerUN'])
     signalR('Note that you have less than half hour left', session['reserver'])
     return {}, 200
 
@@ -65,11 +65,11 @@ def carEntered():
             msg = 'Owner has entered the park'
         elif session["reserver"] == None or reserverPn != currPN:
             msg = f'A car with platenumber {currPN} entered your park without reservation'
-            signalR(session["ownerPN"], msg)
+            signalR(session["ownerUN"], msg)
         else:
             msg = f'The reserver has entered the park'
             status = True
-            signalR(session["ownerPN"], msg)
+            signalR(session["ownerUN"], msg)
         session['status'] = status
         return {'msg': msg, 'status': status, 'timeLeft': timeLeft}, 200
     except:
@@ -81,7 +81,7 @@ def carLeft():
     try:
         if(not session['status']):
             msg = 'Car has left'
-            signalR(session["ownerPN"], msg)
+            signalR(session["ownerUN"], msg)
         else:
             res = requests.get(
                 f'http://releasepark.azurewebsites.net/api/releasepark?location={session["location"]}&username={session["ownerUN"]}&password={session["password"]}').json()
